@@ -4,287 +4,360 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JPRMI Kota Dumai · Jaringan Pemuda dan Remaja Masjid Indonesia</title>
-<meta name="description" content="Website resmi JPRMI Kota Dumai: program, agenda, galeri kegiatan, dan pendaftaran relawan pemuda dan remaja masjid.">
+<meta name="description" content="Website Pimpinan Daerah JPRMI Kota Dumai: profil, visi-misi, program, kegiatan terbaru, pengurus, dan pendaftaran anggota.">
+<meta property="og:title" content="JPRMI Kota Dumai">
+<meta property="og:image" content="assets/logo-jprmi-dumai.jpg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
-body{margin:0;background:#F7F5EF}
-a{color:#0F4C3A}a:hover{color:#0A3528}
+:root{
+  --navy:#2A2E7F; --navy-dk:#1C1F5C; --green:#00813F; --green-bg:#E6F4EC;
+  --yellow:#F7D417; --red:#E5262C; --ground:#F6F7FB; --ink:#1A1D33; --muted:#4D5270; --line:#E1E3EE;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--ground);line-height:1.6}
+a{color:var(--navy)} a:hover{color:var(--green)}
+img{max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.01em}
+h2{font-size:40px;font-weight:800}
+h3{font-size:20px;font-weight:800}
+p{margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent}
+.btn-yellow{background:var(--yellow);color:var(--navy-dk)} .btn-yellow:hover{background:#FFE34D;color:var(--navy-dk)}
+.btn-ghost{border-color:#FFFFFF;color:#FFFFFF} .btn-ghost:hover{background:#FFFFFF;color:var(--navy)}
+.btn-navy{background:var(--navy);color:#FFFFFF} .btn-navy:hover{background:var(--navy-dk);color:#FFFFFF}
+section{padding:96px 0}
+.head{display:flex;flex-direction:column;gap:12px;max-width:720px;margin-bottom:40px}
+.card{background:#FFFFFF;border:1px solid var(--line);border-radius:20px;padding:28px}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+
+/* topbar + header */
+.topbar{background:var(--navy-dk);color:#C9CCEB;font-size:13px}
+.topbar .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:8px;padding-bottom:8px}
+.topbar a{color:#FFFFFF;text-decoration:none;font-weight:600}
+header{background:#FFFFFF;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand b{display:block;font-size:20px;font-weight:800;color:var(--navy);letter-spacing:.02em;line-height:1.1}
+.brand span{font-size:13px;color:var(--muted);font-weight:600}
+nav{display:flex;flex-wrap:wrap;gap:0 22px;font-size:15px;font-weight:600}
+nav a{text-decoration:none;color:var(--ink);padding:12px 0}
+nav a:hover{color:var(--green)}
+
+/* hero */
+.hero{background:var(--navy);color:#FFFFFF;padding:88px 0;position:relative;overflow:hidden}
+.hero .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:56px}
+.hero-text{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:22px}
+.hero .kicker{color:var(--yellow)}
+.hero h1{font-size:58px;font-weight:800;letter-spacing:-.02em}
+.hero p{font-size:19px;color:#DADCF2;max-width:560px}
+.hero-logo{flex:0 1 380px;background:#FFFFFF;border-radius:28px;padding:28px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.hero-logo img{display:block;width:100%;height:auto}
+.stripe{position:absolute;left:0;right:0;bottom:0;height:8px;display:flex}
+.stripe i{flex:1}
+
+/* stats */
+.stats{background:#FFFFFF;border-bottom:1px solid var(--line);padding:40px 0}
+.stats .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.stat b{display:block;font-size:38px;font-weight:800;color:var(--navy);line-height:1.1}
+.stat span{font-size:15px;color:var(--muted)}
+
+/* profil */
+.profil-top{display:flex;flex-wrap:wrap;gap:40px;margin-bottom:24px}
+.profil-top > div{flex:1 1 440px;min-width:0}
+.visi{background:var(--navy);color:#FFFFFF;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:14px}
+.visi .kicker{color:var(--yellow)}
+.visi blockquote{margin:0;font-size:24px;font-weight:700;line-height:1.4}
+ol.list{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:16px}
+.card h3{margin-bottom:14px;color:var(--navy)}
+
+/* program */
+.prog{display:flex;flex-direction:column;gap:12px}
+.ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#FFFFFF}
+.prog p{color:var(--muted);font-size:15px}
+.tag{align-self:flex-start;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--green-bg);color:var(--green)}
+
+/* berita */
+.news{display:flex;flex-direction:column;overflow:hidden;padding:0}
+.news .ph{height:200px;background:#E9EAF4;border-bottom:2px dashed #C3C6DD;display:flex;align-items:center;justify-content:center;text-align:center;color:#5A5F80;font-size:14px;padding:16px}
+.news .body{padding:24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.news time{font-size:13px;font-weight:700;color:var(--green)}
+.news p{font-size:15px;color:var(--muted);flex:1}
+.news a{font-weight:700;font-size:15px;padding:8px 0}
+
+/* pengurus */
+.person{display:flex;align-items:center;gap:16px}
+.avatar{flex:0 0 64px;height:64px;border-radius:50%;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
+.person b{display:block;font-size:17px}
+.person span{font-size:14px;color:var(--muted)}
+
+/* gabung */
+.gabung{background:var(--green);color:#FFFFFF}
+.gabung .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:32px}
+.gabung h2{color:#FFFFFF}
+.gabung p{color:#DFF2E7;font-size:18px;max-width:620px;margin-top:12px}
+.gabung .btns{display:flex;flex-wrap:wrap;gap:12px}
+
+footer{background:var(--navy-dk);color:#C9CCEB;padding:64px 0 32px}
+footer .grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:32px}
+footer h4{margin:0 0 12px;color:#FFFFFF;font-size:16px}
+footer a{color:#C9CCEB;text-decoration:none;display:block;padding:4px 0}
+footer a:hover{color:var(--yellow)}
+.foot-logo{width:110px;height:110px;border-radius:16px;background:#FFFFFF;display:block;margin-bottom:14px}
+.copy{border-top:1px solid #33377A;margin-top:40px;padding-top:24px;font-size:13px;color:#A9ADD6}
+
+@media (max-width:640px){
+  section{padding:64px 0}
+  .hero{padding:56px 0}
+  .hero h1{font-size:38px}
+  h2{font-size:30px}
+  .visi blockquote{font-size:20px}
+  nav{gap:0 16px;font-size:14px}
+  header{position:static}
+}
 </style>
-<style>html{scroll-behavior:smooth} @media (max-width:640px){h1{font-size:40px!important} h2{font-size:30px!important}}</style>
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<meta property="og:image" content="assets/logo-jprmi-dumai.jpg">
 </head>
 <body>
-<div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #1B2420; background: #F7F5EF; width: 100%">
 
-<header style="background: #FFFFFF; border-bottom: 1px solid #E4E1D6">
-<div style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
-<a href="#beranda" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1B2420">
-<img src="assets/logo-emblem.png" alt="Logo JPRMI Kota Dumai" width="74" height="53" style="height: 53px; width: auto; display: block">
-<div style="display: flex; flex-direction: column">
-<span style="font-size: 18px; font-weight: 800; letter-spacing: 0.02em">JPRMI</span>
-<span style="font-size: 13px; color: #55605A">Kota Dumai</span>
+<div class="topbar">
+  <div class="wrap">
+    <span>Pimpinan Daerah Kota Dumai · Pimpinan Wilayah Riau</span>
+    <a href="https://www.jprmi.or.id/" target="_blank" rel="noopener">Kunjungi JPRMI Pusat →</a>
+  </div>
 </div>
-</a>
-<nav aria-label="Menu utama" style="display: flex; flex-wrap: wrap; gap: 4px 24px; font-size: 15px; font-weight: 600">
-<a href="#beranda" style="text-decoration: none; padding: 12px 0">Beranda</a>
-<a href="#tentang" style="text-decoration: none; padding: 12px 0; color: #1B2420">Tentang</a>
-<a href="#program" style="text-decoration: none; padding: 12px 0; color: #1B2420">Program</a>
-<a href="#agenda" style="text-decoration: none; padding: 12px 0; color: #1B2420">Agenda</a>
-<a href="#galeri" style="text-decoration: none; padding: 12px 0; color: #1B2420">Galeri</a>
-<a href="#kontak" style="text-decoration: none; padding: 12px 0; color: #1B2420">Kontak</a>
-</nav>
-<a href="#gabung" style="text-decoration: none; background: #E2B04A; color: #1B2420; font-weight: 700; font-size: 15px; padding: 12px 22px; border-radius: 999px">Gabung Bersama Kami</a>
-</div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#beranda">
+      <img src="assets/logo-emblem.png" alt="Logo JPRMI Kota Dumai" width="74" height="53" style="height:53px;width:auto">
+      <div><b>JPRMI</b><span>Kota Dumai</span></div>
+    </a>
+    <nav aria-label="Menu utama">
+      <a href="#profil">Profil</a>
+      <a href="#program">Program</a>
+      <a href="#kegiatan">Kegiatan</a>
+      <a href="#pengurus">Pengurus</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <a class="btn btn-navy" href="https://kta.jprmi.or.id" target="_blank" rel="noopener">Daftar KTA</a>
+  </div>
 </header>
 
-<section id="beranda" style="background: #0F4C3A; color: #FFFFFF">
-<div style="max-width: 1200px; margin: 0 auto; padding: 88px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
-<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #E2B04A">Jaringan Pemuda dan Remaja Masjid Indonesia</span>
-<h1 style="margin: 0; font-size: 60px; line-height: 1.08; font-weight: 800; letter-spacing: -0.02em">Pemuda bergerak, masjid makmur.</h1>
-<p style="margin: 0; font-size: 19px; line-height: 1.6; color: #D5E3DC; max-width: 540px">Wadah pemuda dan remaja masjid se-Kota Dumai untuk belajar, berdakwah, dan berbagi. Kami menjadikan masjid pusat kegiatan anak muda yang positif dan bermanfaat bagi masyarakat.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px">
-<a href="#gabung" style="text-decoration: none; background: #E2B04A; color: #1B2420; font-weight: 700; font-size: 16px; padding: 16px 28px; border-radius: 999px">Daftar Jadi Relawan</a>
-<a href="#agenda" style="text-decoration: none; border: 2px solid #FFFFFF; color: #FFFFFF; font-weight: 700; font-size: 16px; padding: 14px 26px; border-radius: 999px">Lihat Agenda Terdekat</a>
-</div>
-</div>
-<div style="flex: 1 1 420px; min-width: 0; height: 440px; border-radius: 24px; border: 2px dashed #5E8C7B; background: #165A46; display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px; box-sizing: border-box; color: #B9D2C7; font-size: 15px; line-height: 1.5">[FOTO UTAMA]<br>Foto kegiatan bersama pemuda di masjid</div>
-</div>
+<main>
+<section id="beranda" class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="kicker">Jaringan Pemuda dan Remaja Masjid Indonesia</span>
+      <h1>Di shaf terdepan, membangun generasi masjid.</h1>
+      <p>Wadah pemuda dan remaja masjid se-Kota Dumai untuk mengembalikan fungsi masjid sebagai pusat kegiatan umat, sekaligus melahirkan pemimpin muda yang kreatif, mandiri, dan berkarakter.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px">
+        <a class="btn btn-yellow" href="https://kta.jprmi.or.id" target="_blank" rel="noopener">Gabung Jadi Anggota</a>
+        <a class="btn btn-ghost" href="#kegiatan">Kegiatan Terbaru</a>
+      </div>
+    </div>
+    <div class="hero-logo">
+      <img src="assets/logo-jprmi-dumai.jpg" alt="Logo JPRMI Kota Dumai" width="640" height="640">
+    </div>
+  </div>
+  <div class="stripe" aria-hidden="true"><i style="background:var(--green)"></i><i style="background:var(--yellow)"></i><i style="background:var(--red)"></i></div>
 </section>
 
-<section aria-label="Angka organisasi" style="background: #FFFFFF; border-bottom: 1px solid #E4E1D6">
-<div style="max-width: 1200px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px">
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 36px; font-weight: 800; color: #0F4C3A">[JUMLAH]</span><span style="font-size: 15px; color: #55605A">Masjid binaan</span></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 36px; font-weight: 800; color: #0F4C3A">[JUMLAH]</span><span style="font-size: 15px; color: #55605A">Anggota & relawan aktif</span></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 36px; font-weight: 800; color: #0F4C3A">[JUMLAH]</span><span style="font-size: 15px; color: #55605A">Kecamatan terjangkau</span></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 36px; font-weight: 800; color: #0F4C3A">[JUMLAH]</span><span style="font-size: 15px; color: #55605A">Kegiatan tahun ini</span></div>
+<div class="stats" aria-label="Sekilas angka">
+  <div class="wrap grid">
+    <div class="stat"><b>2005</b><span>JPRMI berdiri secara nasional</span></div>
+    <div class="stat"><b>±320</b><span>Pelajar &amp; remaja masjid ikut Tarhib Ramadhan 1447 H</span></div>
+    <div class="stat"><b>260</b><span>Paket takjil dibagikan pada Ramadhan 2026</span></div>
+    <div class="stat"><b>3×</b><span>Tarhib Ramadhan digelar JPRMI Dumai</span></div>
+  </div>
 </div>
+
+<section id="profil">
+  <div class="wrap">
+    <div class="head">
+      <span class="kicker">Profil</span>
+      <h2>Tentang JPRMI</h2>
+    </div>
+    <div class="profil-top">
+      <div style="display:flex;flex-direction:column;gap:16px;font-size:17px;color:var(--muted)">
+        <h3 style="color:var(--navy);font-size:22px">Sejarah singkat</h3>
+        <p>JPRMI dideklarasikan pada <b style="color:var(--ink)">11 September 2005</b> (7 Sya'ban 1426 H) dalam Musyawarah Besar I di Masjid Agung Sunda Kelapa, Jakarta. Pendirinya adalah 27 organisasi pemuda dan remaja masjid yang ingin bekerja sama dan prihatin atas kondisi organisasi remaja masjid saat itu.</p>
+        <p>JPRMI berdiri sebagai jaringan yang independen untuk menghimpun potensi pemuda masjid. Kini JPRMI memiliki pengurus wilayah dan daerah di berbagai provinsi, termasuk <b style="color:var(--ink)">Pimpinan Daerah Kota Dumai</b> di bawah Pimpinan Wilayah Riau.</p>
+        <a href="https://www.jprmi.or.id/sejarah/" target="_blank" rel="noopener" style="font-weight:700;padding:8px 0">Baca sejarah lengkap di situs pusat →</a>
+      </div>
+      <div class="visi">
+        <span class="kicker">Visi</span>
+        <blockquote>Di shaf terdepan dalam mengusung peradaban Islam, melahirkan pemimpin muda berbasis masjid dalam bingkai persatuan umat.</blockquote>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <h3>Misi</h3>
+        <ol class="list">
+          <li>Mengembalikan fungsi masjid sebagai sentral kegiatan umat.</li>
+          <li>Melahirkan kader-kader muda yang kreatif, mandiri, serta berkarakter pemimpin berbasis masjid.</li>
+          <li>Bersinergi dalam mewujudkan cita-cita peradaban Islam.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Tujuan</h3>
+        <ol class="list">
+          <li>Menghimpun potensi pemuda dan remaja masjid untuk menguatkan dakwah Islam.</li>
+          <li>Memperbanyak pemuda dan remaja masjid yang ikut memakmurkan dan menghidupkan masjid.</li>
+          <li>Menyiapkan pemimpin umat dan bangsa yang berakar pada nilai-nilai masjid.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="tentang">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 56px">
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8A6516">Tentang Kami</span>
-<h2 style="margin: 0; font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em">Berawal dari remaja masjid yang ingin saling menguatkan.</h2>
-<p style="margin: 0; font-size: 17px; line-height: 1.7; color: #3C4642">JPRMI lahir dari keinginan para aktivis pemuda dan remaja masjid untuk bekerja sama, sekaligus kepedulian terhadap kondisi organisasi remaja masjid saat ini. Di Kota Dumai, kami menghubungkan remaja masjid dari berbagai kelurahan agar kegiatannya hidup, terarah, dan saling mendukung.</p>
-<a href="#" style="font-weight: 700; font-size: 16px; padding: 12px 0">Baca sejarah & struktur pengurus</a>
-</div>
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-<div style="background: #FFFFFF; border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px">
-<h3 style="margin: 0; font-size: 20px; font-weight: 800; color: #0F4C3A">Visi</h3>
-<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #3C4642">[VISI ORGANISASI sesuai AD/ART JPRMI Kota Dumai]</p>
-</div>
-<div style="background: #FFFFFF; border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px">
-<h3 style="margin: 0; font-size: 20px; font-weight: 800; color: #0F4C3A">Misi</h3>
-<ol style="margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.7; color: #3C4642">
-<li>[MISI 1]</li>
-<li>[MISI 2]</li>
-<li>[MISI 3]</li>
-</ol>
-</div>
-</div>
-</div>
+<section id="program" style="background:#FFFFFF;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="kicker">Program</span>
+      <h2>Yang kami kerjakan</h2>
+    </div>
+    <div class="grid">
+      <div class="card prog">
+        <div class="ico" style="background:var(--navy)"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21v-9a7 7 0 0 1 14 0v9"/><path d="M12 2v3"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg></div>
+        <h3>Tarhib Ramadhan</h3>
+        <p>Tabligh akbar dan pawai menyambut Ramadhan bersama pelajar dan remaja masjid se-Kota Dumai.</p>
+        <span class="tag">Syiar &amp; Dakwah</span>
+      </div>
+      <div class="card prog">
+        <div class="ico" style="background:var(--green)"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 21V7"/><path d="M12 7c-1.5-3-5-3-5 0M12 7c1.5-3 5-3 5 0"/></svg></div>
+        <h3>BABAJIL</h3>
+        <p>Berbagi takjil gratis di bulan Ramadhan untuk para pencari nafkah dan anak-anak panti asuhan.</p>
+        <span class="tag">Syiar &amp; Dakwah</span>
+      </div>
+      <div class="card prog">
+        <div class="ico" style="background:var(--red)"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+        <h3>Aksi Kemanusiaan</h3>
+        <p>Penggalangan dana bersama mitra untuk saudara-saudara yang terdampak bencana di Sumatra.</p>
+        <span class="tag">Sosial</span>
+      </div>
+      <div class="card prog">
+        <div class="ico" style="background:var(--navy)"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg></div>
+        <h3>Kajian &amp; Pembinaan</h3>
+        <p>Pembinaan pemuda dan remaja masjid agar aktif, berilmu, dan siap memimpin kegiatan di masjidnya.</p>
+        <span class="tag">Kaderisasi</span>
+      </div>
+      <div class="card prog">
+        <div class="ico" style="background:var(--green)"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 5.5 5.5"/></svg></div>
+        <h3>Musyawarah Kerja Daerah</h3>
+        <p>Forum tahunan pengurus untuk menyusun dan mengevaluasi program kerja JPRMI Kota Dumai.</p>
+        <span class="tag">Organisasi</span>
+      </div>
+      <div class="card prog">
+        <div class="ico" style="background:var(--navy-dk)"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+        <h3>Program Nasional</h3>
+        <p>Bersinergi dengan program JPRMI Pusat: Pendidikan, SBM, dan KORMA.</p>
+        <a href="https://www.jprmi.or.id/category/program/korma/" target="_blank" rel="noopener" style="font-weight:700;font-size:15px;padding:6px 0">Lihat di situs pusat →</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="program" style="background: #FFFFFF; border-top: 1px solid #E4E1D6; border-bottom: 1px solid #E4E1D6">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
-<div style="display: flex; flex-direction: column; gap: 12px; max-width: 680px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8A6516">Program Kami</span>
-<h2 style="margin: 0; font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em">Dari kajian sampai aksi sosial.</h2>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
-
-<div style="border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: #F7F5EF">
-<div style="width: 52px; height: 52px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21v-9a7 7 0 0 1 14 0v9"/><path d="M12 2v3"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg></div>
-<h3 style="margin: 0; font-size: 20px; font-weight: 800">Gerakan Ayo ke Masjid</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3C4642">Mengajak pemuda kembali meramaikan masjid lewat shalat berjamaah dan kegiatan rutin.</p>
-</div>
-
-<div style="border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: #F7F5EF">
-<div style="width: 52px; height: 52px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2z"/><path d="M22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg></div>
-<h3 style="margin: 0; font-size: 20px; font-weight: 800">Kajian Pemuda</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3C4642">Kajian Islam rutin dengan tema dekat dengan keseharian anak muda.</p>
-</div>
-
-<div style="border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: #F7F5EF">
-<div style="width: 52px; height: 52px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
-<h3 style="margin: 0; font-size: 20px; font-weight: 800">Safari Dakwah</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3C4642">Berkunjung ke masjid-masjid di tiap kecamatan untuk membina dan menyambung remaja masjid.</p>
-</div>
-
-<div style="border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: #F7F5EF">
-<div style="width: 52px; height: 52px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
-<h3 style="margin: 0; font-size: 20px; font-weight: 800">Aksi Sosial & Kemanusiaan</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3C4642">Bakti sosial, berbagi sembako, dan penggalangan dana untuk yang membutuhkan.</p>
-</div>
-
-<div style="border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: #F7F5EF">
-<div style="width: 52px; height: 52px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3l3 5-3 4-3-4z"/><path d="M3.5 10l5.5 2-1 6"/><path d="M20.5 10L15 12l1 6"/></svg></div>
-<h3 style="margin: 0; font-size: 20px; font-weight: 800">Olahraga & Kebersamaan</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3C4642">Turnamen futsal, gotong royong bersih masjid, dan kegiatan yang mempererat ukhuwah.</p>
-</div>
-
-<div style="border: 1px solid #E4E1D6; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; background: #F7F5EF">
-<div style="width: 52px; height: 52px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l2-3h4l2 3"/></svg></div>
-<h3 style="margin: 0; font-size: 20px; font-weight: 800">Media & Dakwah Digital</h3>
-<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #3C4642">Konten dakwah kreatif di media sosial, dikelola tim media pemuda.</p>
-</div>
-
-</div>
-</div>
+<section id="kegiatan">
+  <div class="wrap">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:40px">
+      <div class="head" style="margin:0">
+        <span class="kicker">Kegiatan Terbaru</span>
+        <h2>Kabar dari JPRMI Dumai</h2>
+      </div>
+      <a href="https://www.jprmi.or.id/category/pw-riau/pd-kota-dumai/" target="_blank" rel="noopener" style="font-weight:700;padding:12px 0">Semua berita →</a>
+    </div>
+    <div class="grid">
+      <article class="card news">
+        <div class="ph">[FOTO] Pembagian takjil BABAJIL</div>
+        <div class="body">
+          <time datetime="2026-03-15">15 Maret 2026</time>
+          <h3>BABAJIL 2026: 260 paket takjil untuk warga</h3>
+          <p>Departemen Syiar &amp; Dakwah membagikan takjil gratis kepada para pencari nafkah dan panti asuhan, didukung para donatur dan mitra.</p>
+          <a href="https://www.jprmi.or.id/category/pw-riau/pd-kota-dumai/" target="_blank" rel="noopener">Selengkapnya</a>
+        </div>
+      </article>
+      <article class="card news">
+        <div class="ph">[FOTO] Pawai Tarhib Ramadhan</div>
+        <div class="body">
+          <time datetime="2026-02-15">15 Februari 2026</time>
+          <h3>Tarhib Ramadhan 1447 H: tabligh akbar &amp; pawai keliling</h3>
+          <p>Sekitar 320 pelajar dan remaja masjid berkumpul di Masjid Agung Habiburrahman, Dumai Islamic Center, lalu berpawai menyambut Ramadhan.</p>
+          <a href="https://www.jprmi.or.id/category/pw-riau/pd-kota-dumai/" target="_blank" rel="noopener">Selengkapnya</a>
+        </div>
+      </article>
+      <article class="card news">
+        <div class="ph">[FOTO] Musykerda 2026</div>
+        <div class="body">
+          <time datetime="2026-02-08">8 Februari 2026</time>
+          <h3>Musyawarah Kerja Daerah 2026</h3>
+          <p>Pengurus JPRMI Kota Dumai menggelar Musykerda di SMP IT Al Izzah Dumai untuk menyusun program kerja tahun 2026.</p>
+          <a href="https://www.jprmi.or.id/category/pw-riau/pd-kota-dumai/" target="_blank" rel="noopener">Selengkapnya</a>
+        </div>
+      </article>
+    </div>
+  </div>
 </section>
 
-<section id="agenda">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
-<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
-<div style="display: flex; flex-direction: column; gap: 12px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8A6516">Agenda</span>
-<h2 style="margin: 0; font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em">Kegiatan terdekat</h2>
-</div>
-<a href="#" style="font-weight: 700; font-size: 16px; padding: 12px 0">Lihat semua agenda</a>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
-
-<article style="background: #FFFFFF; border: 1px solid #E4E1D6; border-radius: 20px; padding: 24px; display: flex; gap: 20px">
-<div style="flex: 0 0 72px; height: 80px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
-<span style="font-size: 22px; font-weight: 800">[TGL]</span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em">[BLN]</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #8A6516">Kajian Pemuda</span>
-<h3 style="margin: 0; font-size: 18px; font-weight: 800; line-height: 1.3">[JUDUL KAJIAN]</h3>
-<span style="font-size: 14px; color: #55605A">[TEMPAT] · [JAM]</span>
-<a href="#" style="font-size: 14px; font-weight: 700; padding: 8px 0">Daftar ikut</a>
-</div>
-</article>
-
-<article style="background: #FFFFFF; border: 1px solid #E4E1D6; border-radius: 20px; padding: 24px; display: flex; gap: 20px">
-<div style="flex: 0 0 72px; height: 80px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
-<span style="font-size: 22px; font-weight: 800">[TGL]</span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em">[BLN]</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #8A6516">Safari Dakwah</span>
-<h3 style="margin: 0; font-size: 18px; font-weight: 800; line-height: 1.3">[NAMA MASJID TUJUAN]</h3>
-<span style="font-size: 14px; color: #55605A">[TEMPAT] · [JAM]</span>
-<a href="#" style="font-size: 14px; font-weight: 700; padding: 8px 0">Daftar ikut</a>
-</div>
-</article>
-
-<article style="background: #FFFFFF; border: 1px solid #E4E1D6; border-radius: 20px; padding: 24px; display: flex; gap: 20px">
-<div style="flex: 0 0 72px; height: 80px; border-radius: 14px; background: #0F4C3A; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
-<span style="font-size: 22px; font-weight: 800">[TGL]</span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em">[BLN]</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
-<span style="font-size: 13px; font-weight: 700; color: #8A6516">Aksi Sosial</span>
-<h3 style="margin: 0; font-size: 18px; font-weight: 800; line-height: 1.3">[NAMA KEGIATAN SOSIAL]</h3>
-<span style="font-size: 14px; color: #55605A">[TEMPAT] · [JAM]</span>
-<a href="#" style="font-size: 14px; font-weight: 700; padding: 8px 0">Daftar ikut</a>
-</div>
-</article>
-
-</div>
-</div>
+<section id="pengurus" style="background:#FFFFFF;border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="head">
+      <span class="kicker">Pengurus</span>
+      <h2>Pimpinan Daerah JPRMI Kota Dumai</h2>
+    </div>
+    <div class="grid">
+      <div class="card person"><div class="avatar" aria-hidden="true">FC</div><div><b>Ust. Febri Chairul Anwar, S.E.</b><span>Pembina</span></div></div>
+      <div class="card person"><div class="avatar" aria-hidden="true">K</div><div><b>[NAMA KETUA]</b><span>Ketua</span></div></div>
+      <div class="card person"><div class="avatar" aria-hidden="true">RF</div><div><b>Muh. Rofy Fahlevi, S.T.</b><span>Sekretaris</span></div></div>
+      <div class="card person"><div class="avatar" aria-hidden="true">B</div><div><b>[NAMA BENDAHARA]</b><span>Bendahara</span></div></div>
+    </div>
+  </div>
 </section>
 
-<section id="galeri" style="background: #FFFFFF; border-top: 1px solid #E4E1D6">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
-<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
-<div style="display: flex; flex-direction: column; gap: 12px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #8A6516">Galeri</span>
-<h2 style="margin: 0; font-size: 40px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em">Jejak kegiatan kami</h2>
-</div>
-<a href="https://www.instagram.com/jprmi.kotadumai" style="font-weight: 700; font-size: 16px; padding: 12px 0">Ikuti @jprmi.kotadumai</a>
-</div>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
-
-<div style="height: 240px; border-radius: 16px; border: 2px dashed #C9C4B4; background: #F1EEE5; display: flex; align-items: center; justify-content: center; text-align: center; color: #6B7069; font-size: 14px; padding: 16px; box-sizing: border-box">[FOTO] Kajian rutin</div>
-
-<div style="height: 240px; border-radius: 16px; border: 2px dashed #C9C4B4; background: #F1EEE5; display: flex; align-items: center; justify-content: center; text-align: center; color: #6B7069; font-size: 14px; padding: 16px; box-sizing: border-box">[FOTO] Safari dakwah</div>
-
-<div style="height: 240px; border-radius: 16px; border: 2px dashed #C9C4B4; background: #F1EEE5; display: flex; align-items: center; justify-content: center; text-align: center; color: #6B7069; font-size: 14px; padding: 16px; box-sizing: border-box">[FOTO] Bakti sosial</div>
-
-<div style="height: 240px; border-radius: 16px; border: 2px dashed #C9C4B4; background: #F1EEE5; display: flex; align-items: center; justify-content: center; text-align: center; color: #6B7069; font-size: 14px; padding: 16px; box-sizing: border-box">[FOTO] Bersih-bersih masjid</div>
-
-<div style="height: 240px; border-radius: 16px; border: 2px dashed #C9C4B4; background: #F1EEE5; display: flex; align-items: center; justify-content: center; text-align: center; color: #6B7069; font-size: 14px; padding: 16px; box-sizing: border-box">[FOTO] Turnamen futsal</div>
-
-<div style="height: 240px; border-radius: 16px; border: 2px dashed #C9C4B4; background: #F1EEE5; display: flex; align-items: center; justify-content: center; text-align: center; color: #6B7069; font-size: 14px; padding: 16px; box-sizing: border-box">[FOTO] Rapat pengurus</div>
-
-</div>
-</div>
+<section class="gabung" id="gabung">
+  <div class="wrap">
+    <div>
+      <h2>Mari bergabung di shaf terdepan.</h2>
+      <p>Terbuka untuk pemuda dan remaja masjid di seluruh Kota Dumai. Daftar Kartu Tanda Anggota (KTA) secara online atau hubungi pengurus langsung.</p>
+    </div>
+    <div class="btns">
+      <a class="btn btn-yellow" href="https://kta.jprmi.or.id" target="_blank" rel="noopener">Daftar KTA Online</a>
+      <a class="btn btn-ghost" href="#kontak">Hubungi Pengurus</a>
+    </div>
+  </div>
 </section>
+</main>
 
-<section id="gabung" style="background: #0F4C3A; color: #FFFFFF">
-<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px; display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start">
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
-<span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #E2B04A">Gabung Bersama Kami</span>
-<h2 style="margin: 0; font-size: 40px; line-height: 1.15; font-weight: 800">Jadi bagian dari gerakan pemuda masjid Dumai.</h2>
-<p style="margin: 0; font-size: 17px; line-height: 1.7; color: #D5E3DC">Terbuka untuk pemuda dan remaja masjid di seluruh Kota Dumai. Isi data singkat, pengurus akan menghubungi lewat WhatsApp.</p>
-</div>
-<form style="flex: 1 1 420px; min-width: 0; background: #FFFFFF; color: #1B2420; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 18px; box-sizing: border-box">
-<div style="display: flex; flex-direction: column; gap: 6px">
-<label for="nama" style="font-size: 14px; font-weight: 700">Nama lengkap</label>
-<input id="nama" type="text" placeholder="Tulis nama Anda" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid #C9C4B4; border-radius: 12px">
-</div>
-<div style="display: flex; flex-direction: column; gap: 6px">
-<label for="wa" style="font-size: 14px; font-weight: 700">Nomor WhatsApp</label>
-<input id="wa" type="tel" placeholder="08xx xxxx xxxx" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid #C9C4B4; border-radius: 12px">
-</div>
-<div style="display: flex; flex-direction: column; gap: 6px">
-<label for="kec" style="font-size: 14px; font-weight: 700">Kecamatan</label>
-<select id="kec" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid #C9C4B4; border-radius: 12px; background: #FFFFFF">
-<option>Pilih kecamatan</option>
-<option>Bukit Kapur</option>
-<option>Dumai Barat</option>
-<option>Dumai Kota</option>
-<option>Dumai Selatan</option>
-<option>Dumai Timur</option>
-<option>Medang Kampai</option>
-<option>Sungai Sembilan</option>
-</select>
-</div>
-<div style="display: flex; flex-direction: column; gap: 6px">
-<label for="minat" style="font-size: 14px; font-weight: 700">Bidang yang diminati</label>
-<select id="minat" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid #C9C4B4; border-radius: 12px; background: #FFFFFF">
-<option>Pilih bidang</option>
-<option>Dakwah & kajian</option>
-<option>Sosial & kemanusiaan</option>
-<option>Media & dokumentasi</option>
-<option>Olahraga & acara</option>
-</select>
-</div>
-<button type="button" style="font: inherit; font-size: 16px; font-weight: 700; background: #0F4C3A; color: #FFFFFF; border: none; border-radius: 999px; padding: 16px 24px; cursor: pointer">Kirim Pendaftaran</button>
-</form>
-</div>
-</section>
-
-<footer id="kontak" style="background: #0A3528; color: #D5E3DC">
-<div style="max-width: 1200px; margin: 0 auto; padding: 64px 24px 32px; display: flex; flex-direction: column; gap: 40px">
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px">
-<div style="display: flex; flex-direction: column; gap: 12px">
-<img src="assets/logo-jprmi-dumai.jpg" alt="Logo JPRMI Kota Dumai" width="120" height="120" style="width: 120px; height: 120px; border-radius: 16px; background: #FFFFFF; display: block">
-<span style="font-size: 20px; font-weight: 800; color: #FFFFFF">JPRMI Kota Dumai</span>
-<p style="margin: 0; font-size: 15px; line-height: 1.6">Jaringan Pemuda dan Remaja Masjid Indonesia, Pimpinan Daerah Kota Dumai.</p>
-</div>
-<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px">
-<span style="font-weight: 700; color: #FFFFFF">Sekretariat</span>
-<span>[ALAMAT SEKRETARIAT]</span>
-<span>Kota Dumai, Riau</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px">
-<span style="font-weight: 700; color: #FFFFFF">Hubungi kami</span>
-<a href="#" style="color: #D5E3DC">WhatsApp: [NOMOR]</a>
-<a href="https://www.instagram.com/jprmi.kotadumai" style="color: #D5E3DC">Instagram: @jprmi.kotadumai</a>
-<a href="#" style="color: #D5E3DC">Email: [EMAIL]</a>
-</div>
-</div>
-<div style="border-top: 1px solid #1F5A47; padding-top: 24px; font-size: 13px; color: #A9C2B7">© 2026 JPRMI Kota Dumai</div>
-</div>
+<footer id="kontak">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <img class="foot-logo" src="assets/logo-jprmi-dumai.jpg" alt="Logo JPRMI Kota Dumai" width="110" height="110">
+        <p style="font-size:15px">Jaringan Pemuda dan Remaja Masjid Indonesia, Pimpinan Daerah Kota Dumai.</p>
+      </div>
+      <div>
+        <h4>Sekretariat</h4>
+        <p style="font-size:15px">[ALAMAT SEKRETARIAT]<br>Kota Dumai, Riau</p>
+      </div>
+      <div>
+        <h4>Hubungi kami</h4>
+        <a href="https://www.instagram.com/jprmi.kotadumai" target="_blank" rel="noopener">Instagram @jprmi.kotadumai</a>
+        <a href="#">WhatsApp [NOMOR]</a>
+        <a href="#">Email [EMAIL]</a>
+      </div>
+      <div>
+        <h4>Tautan</h4>
+        <a href="https://www.jprmi.or.id/" target="_blank" rel="noopener">JPRMI Pusat</a>
+        <a href="https://www.instagram.com/pp_jprmi" target="_blank" rel="noopener">Instagram @pp_jprmi</a>
+        <a href="https://kta.jprmi.or.id" target="_blank" rel="noopener">Kartu Tanda Anggota (KTA)</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 JPRMI Kota Dumai · Bagian dari Jaringan Pemuda dan Remaja Masjid Indonesia</div>
+  </div>
 </footer>
 
-</div>
 </body>
 </html>
