@@ -39,7 +39,7 @@ section{padding:96px 0}
 .topbar{background:var(--navy-dk);color:#CFE0D7;font-size:13px}
 .topbar .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:8px;padding-bottom:8px}
 .topbar a{color:#FFFFFF;text-decoration:none;font-weight:600}
-header{background:#FFFFFF;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+header{background:#FFFFFF;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
 header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-top:12px;padding-bottom:12px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
 .brand b{display:block;font-size:20px;font-weight:800;color:var(--navy);letter-spacing:.02em;line-height:1.1}
@@ -122,6 +122,67 @@ footer a:hover{color:var(--yellow)}
 </style>
 </head>
 <body>
+<style>
+/* ---------- Intro: partikel → masjid → logo, dengan kilauan ---------- */
+#intro{position:fixed;inset:0;z-index:1000;background:#FFFFFF;display:flex;align-items:center;justify-content:center;transition:opacity .9s ease}
+#intro[hidden]{display:none!important}
+#intro.out{opacity:0;pointer-events:none}
+#introGlow,#introFx{position:absolute;inset:0;width:100%;height:100%;display:block}
+#introGlow{z-index:1}
+#introFx{z-index:3;pointer-events:none}
+#introStage{position:relative;z-index:2;width:var(--L,320px);height:var(--L,320px);opacity:0;transform:scale(1);transition:opacity .7s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+#introLogo{display:block;width:100%;height:100%;max-width:none}
+#introShine{position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,252,244,.7) 48%,rgba(255,255,255,.8) 50%,rgba(255,252,244,.7) 52%,rgba(255,255,255,0) 62%);
+  background-size:300% 100%;background-position:150% 0;
+  -webkit-mask-image:url(assets/logo-transparan.png);mask-image:url(assets/logo-transparan.png);
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;opacity:.75}
+#intro.solid #introStage{opacity:1}
+#intro.solid #introShine{animation:introShine 1.4s .4s cubic-bezier(.4,0,.2,1) forwards}
+#intro.out #introStage{transform:scale(1.12)}
+@keyframes introShine{from{background-position:150% 0}to{background-position:-50% 0}}
+#introCaption{position:absolute;z-index:4;left:0;right:0;bottom:calc(13% + env(safe-area-inset-bottom,0px));text-align:center;font-size:13px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#1B6E4D;opacity:0;transform:translateY(8px);transition:opacity .8s ease .3s,transform .8s ease .3s}
+#intro.solid #introCaption{opacity:1;transform:none}
+#skipIntro{position:absolute;z-index:5;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));font:inherit;font-size:14px;font-weight:700;color:#4A5550;background:#FFFFFF;border:1px solid #E4E1D6;border-radius:999px;padding:10px 18px;min-height:44px;cursor:pointer}
+#skipIntro:hover{color:#0F4C3A;border-color:#0F4C3A}
+#skipIntro:focus-visible{outline:3px solid #E2B04A;outline-offset:2px}
+body.intro-on{overflow:hidden}
+
+/* ---------- Kilauan logo di bagian pembuka website ---------- */
+.hero-logo{position:relative;overflow:hidden}
+.hero-logo::after{content:"";position:absolute;inset:-20% auto -20% 0;width:45%;
+  background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,252,244,.55) 50%,rgba(255,255,255,0));
+  transform:translateX(-160%) skewX(-12deg);pointer-events:none}
+.hero-logo.in::after,.no-rv .hero-logo::after{animation:heroSheen 7s 1s ease-in-out infinite}
+@keyframes heroSheen{0%{transform:translateX(-160%) skewX(-12deg)}22%,100%{transform:translateX(330%) skewX(-12deg)}}
+
+/* ---------- Animasi muncul saat scroll ---------- */
+.js .rv{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .8s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.js .rv.rv-left{transform:translateX(-40px)}
+.js .rv.rv-right{transform:translateX(40px)}
+.js .rv.rv-zoom{transform:scale(.9)}
+.js .rv.in{opacity:1;transform:none}
+
+
+@media (prefers-reduced-motion: reduce){
+  .js .rv{transition:opacity .3s ease;transform:none!important}
+  .hero-logo::after{animation:none!important;display:none}
+  #intro.solid #introShine{animation:none}
+}
+</style>
+
+<div id="intro" aria-hidden="true">
+  <canvas id="introGlow"></canvas>
+  <div id="introStage">
+    <img id="introLogo" src="assets/logo-transparan.png" alt="" width="640" height="640">
+    <div id="introShine"></div>
+  </div>
+  <canvas id="introFx"></canvas>
+  <div id="introCaption">Di shaf terdepan</div>
+  <button id="skipIntro" type="button">Lewati</button>
+</div>
+
+<script>document.body.classList.add("intro-on")</script>
 
 <div class="topbar">
   <div class="wrap">
@@ -358,6 +419,259 @@ footer a:hover{color:var(--yellow)}
     <div class="copy">© 2026 JPRMI Kota Dumai · Bagian dari Jaringan Pemuda dan Remaja Masjid Indonesia</div>
   </div>
 </footer>
+
+<script>
+document.documentElement.classList.add('js');
+(function(){
+  var intro=document.getElementById('intro'),
+      cv=document.getElementById('introFx'), ctx=cv.getContext('2d'),
+      gcv=document.getElementById('introGlow'), gctx=gcv.getContext('2d'),
+      logoEl=document.getElementById('introLogo');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var S=200, parts=[], glints=[], raf=0, t0=0, last=0, W=0, H=0, dpr=1, L=320, ox=0, oy=0, finished=false, timers=[], burstDone=false;
+  var MOSQUE_COLORS=[[15,76,58],[27,110,77],[226,176,74],[15,76,58]];
+  var GOLD=[250,240,218];
+
+  // Waktu (ms)
+  var T={fly:350, flyDur:1600, sweep:2350, sweepDur:900, morph:3300, morphDur:1500, burst:4800, solid:5000, fadeParts:5200, out:7000};
+
+  function setSize(){
+    dpr=Math.min(window.devicePixelRatio||1,2); W=window.innerWidth; H=window.innerHeight;
+    [cv,gcv].forEach(function(c){c.width=Math.round(W*dpr); c.height=Math.round(H*dpr);});
+    L=Math.round(Math.min(W*0.72,H*0.56,440)); ox=(W-L)/2; oy=(H-L)/2;
+    intro.style.setProperty('--L',L+'px');
+  }
+
+  function sample(draw,step,keep){
+    var c=document.createElement('canvas'); c.width=c.height=S;
+    var g=c.getContext('2d',{willReadFrequently:true});
+    g.fillStyle='#FFFFFF'; g.fillRect(0,0,S,S); draw(g);
+    var d=g.getImageData(0,0,S,S).data, pts=[];
+    for(var y=0;y<S;y+=step) for(var x=0;x<S;x+=step){
+      var i=(y*S+x)*4; if(keep(d[i],d[i+1],d[i+2])) pts.push({x:x/S,y:y/S,r:d[i],g:d[i+1],b:d[i+2]});
+    }
+    return pts;
+  }
+
+  function star(g,cx,cy,R,r){
+    g.beginPath();
+    for(var k=0;k<10;k++){var a=-Math.PI/2+k*Math.PI/5, rr=k%2?r:R; g.lineTo(cx+Math.cos(a)*rr,cy+Math.sin(a)*rr);}
+    g.closePath(); g.fill();
+  }
+
+  function drawMosque(g){
+    g.fillStyle='#000000';
+    g.beginPath(); g.moveTo(50,124);
+    g.bezierCurveTo(44,82,94,80,100,46); g.bezierCurveTo(106,80,156,82,150,124); g.closePath(); g.fill();
+    g.fillRect(98,34,4,14);
+    star(g,100,24,11,4.6);
+    g.fillRect(40,122,120,50);
+    g.fillRect(36,118,128,6);
+    [[20,32],[168,180]].forEach(function(m){
+      var x0=m[0], w=m[1]-m[0];
+      g.fillRect(x0,62,w,110);
+      g.fillRect(x0-3,92,w+6,5);
+      g.beginPath(); g.moveTo(x0-2,63); g.lineTo(x0+w/2,38); g.lineTo(x0+w+2,63); g.closePath(); g.fill();
+    });
+    g.fillRect(8,172,184,6);
+    g.globalCompositeOperation='destination-out';
+    g.beginPath(); g.moveTo(88,172); g.lineTo(88,148); g.arc(100,148,12,Math.PI,0); g.lineTo(112,172); g.closePath(); g.fill();
+    [58,128].forEach(function(x){ g.beginPath(); g.moveTo(x,160); g.lineTo(x,142); g.arc(x+7,142,7,Math.PI,0); g.lineTo(x+14,160); g.closePath(); g.fill(); });
+    g.globalCompositeOperation='source-over';
+  }
+
+  function build(){
+    var logoPts=sample(function(g){g.drawImage(logoEl,0,0,S,S);},2,function(r,g,b){return r+g+b<640 || Math.max(r,g,b)-Math.min(r,g,b)>70;});
+    var mosquePts=sample(drawMosque,2,function(r,g,b){return r+g+b<380;});
+    for(var i=mosquePts.length-1;i>0;i--){var j=(Math.random()*(i+1))|0, t=mosquePts[i]; mosquePts[i]=mosquePts[j]; mosquePts[j]=t;}
+    var R=Math.hypot(W,H)*0.6;
+    parts=logoPts.map(function(p,i){
+      var m=mosquePts[i%mosquePts.length], a=Math.random()*Math.PI*2, mc=MOSQUE_COLORS[(Math.random()*MOSQUE_COLORS.length)|0];
+      return {
+        sx:W/2+Math.cos(a)*R*(0.85+Math.random()*0.4), sy:H/2+Math.sin(a)*R*(0.85+Math.random()*0.4),
+        mx:m.x+(Math.random()-0.5)*0.006, my:m.y+(Math.random()-0.5)*0.006,
+        lx:p.x, ly:p.y, lc:[p.r,p.g,p.b], mc:mc,
+        d:Math.random()*700, curl:(Math.random()-0.5)*0.6, ph:Math.random()*6.28,
+        tw:Math.random()<0.012, cx:-99, cy:-99
+      };
+    });
+    glints=[]; burstDone=false;
+  }
+
+  function eOut(t){return 1-Math.pow(1-t,3);}
+  function eIO(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function cl(t){return t<0?0:t>1?1:t;}
+  function mix(a,b,k){return [a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k,a[2]+(b[2]-a[2])*k];}
+
+  function addGlint(x,y,size,life,now){ glints.push({x:x,y:y,s:size,life:life,b:now,rot:Math.random()*0.6-0.3}); }
+
+  function drawGlint(gl,now){
+    var k=(now-gl.b)/gl.life; if(k<0||k>1) return false;
+    var a=Math.sin(Math.PI*k), s=gl.s*(0.4+0.6*a);
+    ctx.save(); ctx.translate(gl.x,gl.y); ctx.rotate(gl.rot+k*0.8); ctx.globalAlpha=a;
+    var h=ctx.createRadialGradient(0,0,0,0,0,s*0.9);
+    h.addColorStop(0,'rgba(245,236,214,.85)'); h.addColorStop(1,'rgba(236,224,198,0)');
+    ctx.fillStyle=h; ctx.beginPath(); ctx.arc(0,0,s*0.9,0,6.2832); ctx.fill();
+    ctx.fillStyle='#DCCB9E';
+    ctx.beginPath(); ctx.moveTo(0,-s); ctx.quadraticCurveTo(0,0,s,0); ctx.quadraticCurveTo(0,0,0,s); ctx.quadraticCurveTo(0,0,-s,0); ctx.quadraticCurveTo(0,0,0,-s); ctx.fill();
+    ctx.fillStyle='#FFFDF3'; ctx.beginPath(); ctx.arc(0,0,Math.max(1,s*0.16),0,6.2832); ctx.fill();
+    ctx.restore(); return true;
+  }
+
+  function drawGlow(t){
+    gctx.setTransform(dpr,0,0,dpr,0,0); gctx.clearRect(0,0,W,H);
+    // cahaya lembut di belakang masjid
+    var a1=cl((t-T.fly-900)/900)*(1-cl((t-T.morph)/700))*0.14;
+    // ledakan cahaya saat logo terbentuk, lalu meredup pelan
+    var gb=t-T.burst, a2= gb<0?0: gb<600? gb/600*0.32 : 0.32*(1-cl((gb-600)/1600))+0.08*(1-cl((gb-2200)/600));
+    var a=Math.max(a1,a2); if(a<=0.002) return;
+    var r=L*(0.62+0.18*cl(gb/900));
+    var gr=gctx.createRadialGradient(W/2,H/2,0,W/2,H/2,r);
+    gr.addColorStop(0,'rgba(240,226,190,'+a+')'); gr.addColorStop(.55,'rgba(236,224,198,'+(a*0.4)+')'); gr.addColorStop(1,'rgba(236,224,198,0)');
+    gctx.fillStyle=gr; gctx.beginPath(); gctx.arc(W/2,H/2,r,0,6.2832); gctx.fill();
+    // berkas sinar tipis yang berputar pelan
+    if(gb>0){
+      gctx.save(); gctx.translate(W/2,H/2); gctx.rotate(t*0.00012);
+      for(var i=0;i<12;i++){
+        gctx.rotate(Math.PI/6);
+        var rg=gctx.createLinearGradient(0,0,r*1.25,0);
+        rg.addColorStop(0,'rgba(236,222,190,'+(a*0.22)+')'); rg.addColorStop(1,'rgba(236,222,190,0)');
+        gctx.fillStyle=rg; gctx.beginPath(); gctx.moveTo(0,0); gctx.lineTo(r*1.25,-r*0.06); gctx.lineTo(r*1.25,r*0.06); gctx.closePath(); gctx.fill();
+      }
+      gctx.restore();
+    }
+  }
+
+  function frame(now){
+    var t=now-t0, rad=Math.max(1.1,L/200*0.95);
+    drawGlow(t);
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
+    var alpha = t<T.fadeParts?1:1-cl((t-T.fadeParts)/700);
+    var sw=(t-T.sweep)/T.sweepDur*1.5-0.25;   // posisi pita cahaya yang menyapu masjid
+    if(alpha>0){
+      for(var i=0;i<parts.length;i++){
+        var p=parts[i], x, y, c, r=rad;
+        if(t<T.fly+p.d) continue;
+        var mx=ox+p.mx*L, my=oy+p.my*L;
+        var f=cl((t-T.fly-p.d)/T.flyDur), m=cl((t-T.morph-p.d*0.5)/T.morphDur);
+        if(m<=0){
+          var e=eOut(f), dx=mx-p.sx, dy=my-p.sy, bend=Math.sin(Math.PI*e)*p.curl;
+          x=p.sx+dx*e-dy*bend; y=p.sy+dy*e+dx*bend;
+          c=p.mc;
+          if(f>=1){
+            x+=Math.sin(now*0.003+p.ph)*0.7; y+=Math.cos(now*0.0027+p.ph)*0.7;
+            var band=(p.mx+p.my)/2, dd=Math.abs(band-sw);
+            if(dd<0.09){ var w=1-dd/0.09; c=mix(c,GOLD,w*0.7); r=rad*(1+w*0.3); }
+          }
+        } else {
+          var k=eIO(m), lx=ox+p.lx*L, ly=oy+p.ly*L, lift=Math.sin(Math.PI*k)*L*0.08*p.curl;
+          x=mx+(lx-mx)*k+lift; y=my+(ly-my)*k-lift;
+          c=mix(p.mc,p.lc,k);
+          if(k>0.05&&k<0.95){ c=mix(c,GOLD,Math.sin(Math.PI*k)*0.15); }
+        }
+        p.cx=x; p.cy=y;
+        if(p.tw){
+          var pulse=0.5+0.5*Math.sin(now*0.009+p.ph);
+          ctx.globalAlpha=alpha*0.22*pulse; ctx.fillStyle='rgb(236,224,196)';
+          ctx.beginPath(); ctx.arc(x,y,rad*(2.4+1.4*pulse),0,6.2832); ctx.fill();
+        }
+        ctx.globalAlpha=alpha;
+        ctx.fillStyle='rgb('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+')';
+        ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.fill();
+      }
+      ctx.globalAlpha=1;
+    }
+    // kilau bintang kecil yang muncul acak
+    var dt=now-last; last=now;
+    if(false){
+      var rate = t>T.burst ? 0.012 : 0.02;
+      if(Math.random()<rate*dt){
+        var q=parts[(Math.random()*parts.length)|0];
+        var gx= t>T.solid ? ox+q.lx*L : q.cx, gy= t>T.solid ? oy+q.ly*L : q.cy;
+        addGlint(gx,gy,L*(0.025+Math.random()*0.03),650+Math.random()*400,now);
+      }
+    }
+    if(!burstDone && t>=T.burst){
+      burstDone=true;
+      for(var n=0;n<2;n++){
+        var q2=parts[(Math.random()*parts.length)|0];
+        addGlint(ox+q2.lx*L,oy+q2.ly*L,L*0.035,1000,now+500+n*600);
+      }
+      addGlint(ox+0.3*L,oy+0.28*L,L*0.07,1400,now+200);   // kilau besar di sekitar bintang logo
+    }
+    glints=glints.filter(function(g){ return now<g.b ? true : drawGlint(g,now); });
+    if(!finished) raf=requestAnimationFrame(frame);
+  }
+
+  function later(fn,ms){timers.push(setTimeout(fn,ms));}
+
+  function finish(){
+    if(finished) return; finished=true;
+    timers.forEach(clearTimeout); timers=[];
+    intro.classList.add('solid','out');
+    document.body.classList.remove('intro-on');
+    window.dispatchEvent(new Event('intro:done'));
+    setTimeout(function(){ cancelAnimationFrame(raf); intro.hidden=true; intro.classList.remove('solid','out'); },900);
+  }
+
+  function run(){
+    finished=false; cancelAnimationFrame(raf); timers.forEach(clearTimeout); timers=[];
+    intro.hidden=false; intro.classList.remove('solid','out');
+    var sh=document.getElementById('introShine'); sh.style.animation='none'; void sh.offsetWidth; sh.style.animation='';
+    document.body.classList.add('intro-on'); window.scrollTo(0,0);
+    if(reduce){ intro.classList.add('solid'); later(finish,1200); return; }
+    setSize(); build(); t0=last=performance.now(); raf=requestAnimationFrame(frame);
+    later(function(){intro.classList.add('solid');},T.solid);
+    later(finish,T.out);
+  }
+
+  function start(){
+    var ready = logoEl.decode ? logoEl.decode() : Promise.resolve();
+    ready.then(run).catch(function(){ intro.hidden=true; document.body.classList.remove('intro-on'); window.dispatchEvent(new Event('intro:done')); });
+  }
+
+  document.getElementById('skipIntro').addEventListener('click',finish);
+  window.addEventListener('resize',function(){ if(!finished && !intro.hidden){ setSize(); } });
+  start();
+})();
+
+/* ---------- Scroll reveal ---------- */
+(function(){
+  var groups=[
+    ['.hero-text > *', '', .12],
+    ['.hero-logo', 'rv-zoom', 0],
+    ['.stats .stat', '', .1],
+    ['section .head', '', 0],
+    ['.profil-top > div:first-child', 'rv-left', 0],
+    ['.profil-top > .visi', 'rv-right', .1],
+    ['#profil .grid > .card', '', .12],
+    ['#program .grid > .card', '', .09],
+    ['#kegiatan .grid > .card', '', .12],
+    ['#pengurus .grid > .card', '', .08],
+    ['.gabung .wrap > *', '', .12],
+    ['footer .grid > div', '', .08]
+  ];
+  var els=[];
+  groups.forEach(function(gp){
+    document.querySelectorAll(gp[0]).forEach(function(el,i){
+      el.classList.add('rv'); if(gp[1]) el.classList.add(gp[1]);
+      el.style.setProperty('--d', Math.min(i*gp[2],.6)+'s'); els.push(el);
+    });
+  });
+  var io=null;
+  function observe(){
+    if(io) io.disconnect();
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+    io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(e){ if(!e.classList.contains('in')) io.observe(e); });
+  }
+  window.addEventListener('intro:done',function(){ requestAnimationFrame(observe); });
+  window.addEventListener('intro:reset',function(){ if(io) io.disconnect(); els.forEach(function(e){e.classList.remove('in');}); });
+  setTimeout(function(){ if(!io) observe(); },9000);
+})();
+</script>
 
 </body>
 </html>
