@@ -4,122 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JPRMI Kota Dumai · Jaringan Pemuda dan Remaja Masjid Indonesia</title>
-<meta name="description" content="Website Pimpinan Daerah JPRMI Kota Dumai: profil, visi-misi, program, kegiatan terbaru, pengurus, dan pendaftaran anggota.">
+<meta name="description" content="Website Pengurus Daerah JPRMI Kota Dumai: profil, visi-misi, program, kegiatan terbaru, pengurus, dan pendaftaran anggota.">
 <meta property="og:title" content="JPRMI Kota Dumai">
 <meta property="og:image" content="assets/logo-jprmi-dumai.jpg">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-<style>
-:root{
-  --navy:#0F4C3A; --navy-dk:#0A3528; --green:#1B6E4D; --green-bg:#E3F1EA;
-  --yellow:#E2B04A; --red:#8A6516; --ground:#F7F5EF; --ink:#1B2420; --muted:#4A5550; --line:#E4E1D6;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--ground);line-height:1.6}
-a{color:var(--navy)} a:hover{color:var(--green)}
-img{max-width:100%}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
-.kicker{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
-h1,h2,h3{margin:0;line-height:1.15;letter-spacing:-.01em}
-h2{font-size:40px;font-weight:800}
-h3{font-size:20px;font-weight:800}
-p{margin:0}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent}
-.btn-yellow{background:var(--yellow);color:var(--navy-dk)} .btn-yellow:hover{background:#EEC368;color:var(--navy-dk)}
-.btn-ghost{border-color:#FFFFFF;color:#FFFFFF} .btn-ghost:hover{background:#FFFFFF;color:var(--navy)}
-.btn-navy{background:var(--navy);color:#FFFFFF} .btn-navy:hover{background:var(--navy-dk);color:#FFFFFF}
-section{padding:96px 0}
-.head{display:flex;flex-direction:column;gap:12px;max-width:720px;margin-bottom:40px}
-.card{background:#FFFFFF;border:1px solid var(--line);border-radius:20px;padding:28px}
-.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-
-/* topbar + header */
-.topbar{background:var(--navy-dk);color:#CFE0D7;font-size:13px}
-.topbar .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:8px;padding-bottom:8px}
-.topbar a{color:#FFFFFF;text-decoration:none;font-weight:600}
-header{background:#FFFFFF;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-top:12px;padding-bottom:12px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
-.brand b{display:block;font-size:20px;font-weight:800;color:var(--navy);letter-spacing:.02em;line-height:1.1}
-.brand span{font-size:13px;color:var(--muted);font-weight:600}
-nav{display:flex;flex-wrap:wrap;gap:0 22px;font-size:15px;font-weight:600}
-nav a{text-decoration:none;color:var(--ink);padding:12px 0}
-nav a:hover{color:var(--green)}
-
-/* hero */
-.hero{background:var(--navy);color:#FFFFFF;padding:88px 0;position:relative;overflow:hidden}
-.hero .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:56px}
-.hero-text{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:22px}
-.hero .kicker{color:var(--yellow)}
-.hero h1{font-size:58px;font-weight:800;letter-spacing:-.02em}
-.hero p{font-size:19px;color:#D5E3DC;max-width:560px}
-.hero-logo{flex:0 1 380px;background:#FFFFFF;border-radius:28px;padding:28px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
-.hero-logo img{display:block;width:100%;height:auto}
-.stripe{position:absolute;left:0;right:0;bottom:0;height:8px;display:flex}
-.stripe i{flex:1}
-
-/* stats */
-.stats{background:#FFFFFF;border-bottom:1px solid var(--line);padding:40px 0}
-.stats .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.stat b{display:block;font-size:38px;font-weight:800;color:var(--navy);line-height:1.1}
-.stat span{font-size:15px;color:var(--muted)}
-
-/* profil */
-.profil-top{display:flex;flex-wrap:wrap;gap:40px;margin-bottom:24px}
-.profil-top > div{flex:1 1 440px;min-width:0}
-.visi{background:var(--navy);color:#FFFFFF;border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:14px}
-.visi .kicker{color:var(--yellow)}
-.visi blockquote{margin:0;font-size:24px;font-weight:700;line-height:1.4}
-ol.list{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:16px}
-.card h3{margin-bottom:14px;color:var(--navy)}
-
-/* program */
-.prog{display:flex;flex-direction:column;gap:12px}
-.ico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#FFFFFF}
-.prog p{color:var(--muted);font-size:15px}
-.tag{align-self:flex-start;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--green-bg);color:var(--green)}
-
-/* berita */
-.news{display:flex;flex-direction:column;overflow:hidden;padding:0}
-.news .ph{height:200px;background:#EFECE3;border-bottom:2px dashed #C9C4B4;display:flex;align-items:center;justify-content:center;text-align:center;color:#5E625C;font-size:14px;padding:16px}
-.news .body{padding:24px;display:flex;flex-direction:column;gap:10px;flex:1}
-.news time{font-size:13px;font-weight:700;color:var(--green)}
-.news p{font-size:15px;color:var(--muted);flex:1}
-.news a{font-weight:700;font-size:15px;padding:8px 0}
-
-/* pengurus */
-.person{display:flex;align-items:center;gap:16px}
-.avatar{flex:0 0 64px;height:64px;border-radius:50%;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px}
-.person b{display:block;font-size:17px}
-.person span{font-size:14px;color:var(--muted)}
-
-/* gabung */
-.gabung{background:var(--green);color:#FFFFFF}
-.gabung .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:32px}
-.gabung h2{color:#FFFFFF}
-.gabung p{color:#DFF2E7;font-size:18px;max-width:620px;margin-top:12px}
-.gabung .btns{display:flex;flex-wrap:wrap;gap:12px}
-
-footer{background:var(--navy-dk);color:#CFE0D7;padding:64px 0 32px}
-footer .grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:32px}
-footer h4{margin:0 0 12px;color:#FFFFFF;font-size:16px}
-footer a{color:#CFE0D7;text-decoration:none;display:block;padding:4px 0}
-footer a:hover{color:var(--yellow)}
-.foot-logo{width:110px;height:110px;border-radius:16px;background:#FFFFFF;display:block;margin-bottom:14px}
-.copy{border-top:1px solid #1F5A47;margin-top:40px;padding-top:24px;font-size:13px;color:#A9C2B7}
-
-@media (max-width:640px){
-  section{padding:64px 0}
-  .hero{padding:56px 0}
-  .hero h1{font-size:38px}
-  h2{font-size:30px}
-  .visi blockquote{font-size:20px}
-  nav{gap:0 16px;font-size:14px}
-  header{position:static}
-}
-</style>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <style>
@@ -186,7 +77,7 @@ body.intro-on{overflow:hidden}
 
 <div class="topbar">
   <div class="wrap">
-    <span>Pimpinan Daerah Kota Dumai · Pimpinan Wilayah Riau</span>
+    <span>Pengurus Daerah Kota Dumai · Pengurus Wilayah Riau</span>
     <a href="https://www.jprmi.or.id/" target="_blank" rel="noopener">Kunjungi JPRMI Pusat →</a>
   </div>
 </div>
@@ -201,7 +92,7 @@ body.intro-on{overflow:hidden}
       <a href="#profil">Profil</a>
       <a href="#program">Program</a>
       <a href="#kegiatan">Kegiatan</a>
-      <a href="#pengurus">Pengurus</a>
+      <a href="pengurus.html">Pengurus</a>
       <a href="#kontak">Kontak</a>
     </nav>
     <a class="btn btn-navy" href="https://kta.jprmi.or.id" target="_blank" rel="noopener">Daftar KTA</a>
@@ -246,7 +137,7 @@ body.intro-on{overflow:hidden}
       <div style="display:flex;flex-direction:column;gap:16px;font-size:17px;color:var(--muted)">
         <h3 style="color:var(--navy);font-size:22px">Sejarah singkat</h3>
         <p>JPRMI dideklarasikan pada <b style="color:var(--ink)">11 September 2005</b> (7 Sya'ban 1426 H) dalam Musyawarah Besar I di Masjid Agung Sunda Kelapa, Jakarta. Pendirinya adalah 27 organisasi pemuda dan remaja masjid yang ingin bekerja sama dan prihatin atas kondisi organisasi remaja masjid saat itu.</p>
-        <p>JPRMI berdiri sebagai jaringan yang independen untuk menghimpun potensi pemuda masjid. Kini JPRMI memiliki pengurus wilayah dan daerah di berbagai provinsi, termasuk <b style="color:var(--ink)">Pimpinan Daerah Kota Dumai</b> di bawah Pimpinan Wilayah Riau.</p>
+        <p>JPRMI berdiri sebagai jaringan yang independen untuk menghimpun potensi pemuda masjid. Kini JPRMI memiliki pengurus wilayah dan daerah di berbagai provinsi, termasuk <b style="color:var(--ink)">Pengurus Daerah Kota Dumai</b> di bawah Pengurus Wilayah Riau.</p>
         <a href="https://www.jprmi.or.id/sejarah/" target="_blank" rel="noopener" style="font-weight:700;padding:8px 0">Baca sejarah lengkap di situs pusat →</a>
       </div>
       <div class="visi">
@@ -365,16 +256,19 @@ body.intro-on{overflow:hidden}
 
 <section id="pengurus" style="background:#FFFFFF;border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="head">
-      <span class="kicker">Pengurus</span>
-      <h2>Pimpinan Daerah JPRMI Kota Dumai</h2>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:40px">
+      <div class="head" style="margin:0">
+        <span class="kicker">Pengurus · Periode 2025–2029</span>
+        <h2>Pengurus Daerah JPRMI Kota Dumai</h2>
+      </div>
+      <a class="btn btn-navy" href="pengurus.html">Lihat struktur lengkap</a>
     </div>
     <div class="grid">
-      <div class="card person"><div class="avatar" aria-hidden="true">FC</div><div><b>Ust. Febri Chairul Anwar, S.E.</b><span>Pembina</span></div></div>
-      <div class="card person"><div class="avatar" aria-hidden="true">K</div><div><b>[NAMA KETUA]</b><span>Ketua</span></div></div>
-      <div class="card person"><div class="avatar" aria-hidden="true">RF</div><div><b>Muh. Rofy Fahlevi, S.T.</b><span>Sekretaris</span></div></div>
-      <div class="card person"><div class="avatar" aria-hidden="true">B</div><div><b>[NAMA BENDAHARA]</b><span>Bendahara</span></div></div>
+      <div class="card person"><div class="avatar" aria-hidden="true">EH</div><div><b>Eko Herwinto, S.T.</b><span>Ketua</span></div></div>
+      <div class="card person"><div class="avatar" aria-hidden="true">RF</div><div><b>Muhammad Rofy Fahlevi, S.T.</b><span>Sekretaris</span></div></div>
+      <div class="card person"><div class="avatar" aria-hidden="true">AF</div><div><b>Ana Fitriani, S.T.</b><span>Bendahara</span></div></div>
     </div>
+    <p style="margin-top:20px;font-size:14px;color:var(--muted)">Berdasarkan SK JPRMI Wilayah Riau No. KU.SK/008.11.25/JPRMI-RIAU, berlaku sejak 29 November 2025.</p>
   </div>
 </section>
 
@@ -397,7 +291,7 @@ body.intro-on{overflow:hidden}
     <div class="grid">
       <div>
         <img class="foot-logo" src="assets/logo-jprmi-dumai.jpg" alt="Logo JPRMI Kota Dumai" width="110" height="110">
-        <p style="font-size:15px">Jaringan Pemuda dan Remaja Masjid Indonesia, Pimpinan Daerah Kota Dumai.</p>
+        <p style="font-size:15px">Jaringan Pemuda dan Remaja Masjid Indonesia, Pengurus Daerah Kota Dumai.</p>
       </div>
       <div>
         <h4>Sekretariat</h4>
