@@ -327,7 +327,8 @@ document.documentElement.classList.add('js');
   var GOLD=[250,240,218];
 
   // Waktu (ms)
-  var T={fly:350, flyDur:1600, sweep:2350, sweepDur:900, morph:3300, morphDur:1500, burst:4800, solid:5000, fadeParts:5200, out:7000};
+  var T={fly:350, flyDur:1400, solidIn:2000, solidDur:750, sweep:2750, sweepDur:950, morph:3900, morphDur:1400, burst:5300, solid:5500, fadeParts:5700, out:7200};
+  var mq=null, mqw=null;
 
   function setSize(){
     dpr=Math.min(window.devicePixelRatio||1,2); W=window.innerWidth; H=window.innerHeight;
@@ -353,25 +354,65 @@ document.documentElement.classList.add('js');
     g.closePath(); g.fill();
   }
 
-  function drawMosque(g){
-    g.fillStyle='#000000';
-    g.beginPath(); g.moveTo(50,124);
-    g.bezierCurveTo(44,82,94,80,100,46); g.bezierCurveTo(106,80,156,82,150,124); g.closePath(); g.fill();
-    g.fillRect(98,34,4,14);
-    star(g,100,24,11,4.6);
-    g.fillRect(40,122,120,50);
-    g.fillRect(36,118,128,6);
+  // Gambar masjid. color=false: siluet hitam (untuk posisi partikel); color=true: masjid utuh berwarna
+  function paintMosque(g,color){
+    var GREEN='#1B6E4D', DARK='#0F4C3A', DEEP='#0A3528', GOLDC='#D9AE52', LIGHT='#F7EBCB';
+    function fill(c){ g.fillStyle=color?c:'#000000'; }
+    // menara
     [[20,32],[168,180]].forEach(function(m){
       var x0=m[0], w=m[1]-m[0];
+      if(color){ var gr=g.createLinearGradient(x0,0,x0+w,0); gr.addColorStop(0,'#24805A'); gr.addColorStop(1,DARK); g.fillStyle=gr; } else fill();
       g.fillRect(x0,62,w,110);
-      g.fillRect(x0-3,92,w+6,5);
-      g.beginPath(); g.moveTo(x0-2,63); g.lineTo(x0+w/2,38); g.lineTo(x0+w+2,63); g.closePath(); g.fill();
+      fill(DARK); g.beginPath(); g.moveTo(x0-2,63); g.lineTo(x0+w/2,36); g.lineTo(x0+w+2,63); g.closePath(); g.fill();
+      fill(GOLDC); g.fillRect(x0-3,92,w+6,5); g.fillRect(x0-2,61,w+4,3);
+      fill(GOLDC); g.beginPath(); g.arc(x0+w/2,34,2.2,0,6.2832); g.fill();
+      if(color){ fill(LIGHT); g.beginPath(); g.moveTo(x0+w/2-2.5,120); g.lineTo(x0+w/2-2.5,112); g.arc(x0+w/2,112,2.5,Math.PI,0); g.lineTo(x0+w/2+2.5,120); g.closePath(); g.fill(); }
     });
-    g.fillRect(8,172,184,6);
-    g.globalCompositeOperation='destination-out';
-    g.beginPath(); g.moveTo(88,172); g.lineTo(88,148); g.arc(100,148,12,Math.PI,0); g.lineTo(112,172); g.closePath(); g.fill();
-    [58,128].forEach(function(x){ g.beginPath(); g.moveTo(x,160); g.lineTo(x,142); g.arc(x+7,142,7,Math.PI,0); g.lineTo(x+14,160); g.closePath(); g.fill(); });
-    g.globalCompositeOperation='source-over';
+    // badan
+    fill('#155C43'); g.fillRect(40,122,120,50);
+    // kubah
+    if(color){ var dg=g.createLinearGradient(60,50,140,124); dg.addColorStop(0,'#3A9A6E'); dg.addColorStop(.55,GREEN); dg.addColorStop(1,DARK); g.fillStyle=dg; } else fill();
+    g.beginPath(); g.moveTo(50,124);
+    g.bezierCurveTo(44,82,94,80,100,46); g.bezierCurveTo(106,80,156,82,150,124); g.closePath(); g.fill();
+    if(color){
+      g.save(); g.globalAlpha=.18; g.strokeStyle='#FFFFFF'; g.lineWidth=3; g.lineCap='round';
+      g.beginPath(); g.moveTo(66,108); g.bezierCurveTo(66,90,84,80,94,62); g.stroke(); g.restore();
+    }
+    // list emas, tiang & bintang puncak
+    fill(GOLDC); g.fillRect(36,118,128,6);
+    fill(GOLDC); g.fillRect(98.5,34,3,14);
+    fill('#E2B04A'); star(g,100,24,11,4.6);
+    // lantai
+    fill(DEEP); g.fillRect(8,172,184,6);
+    // pintu & jendela
+    function arch(x,y0,y1,w){ g.beginPath(); g.moveTo(x,y1); g.lineTo(x,y0); g.arc(x+w/2,y0,w/2,Math.PI,0); g.lineTo(x+w,y1); g.closePath(); g.fill(); }
+    if(color){ fill(LIGHT); arch(88,148,172,24); arch(58,142,160,14); arch(128,142,160,14);
+      fill(GOLDC); g.fillRect(99,150,2,22); }
+    else { g.globalCompositeOperation='destination-out'; arch(88,148,172,24); arch(58,142,160,14); arch(128,142,160,14); g.globalCompositeOperation='source-over'; }
+  }
+  function drawMosque(g){ paintMosque(g,false); }
+
+  function makeMosque(){
+    var px=Math.round(L*dpr);
+    mq=document.createElement('canvas'); mq.width=mq.height=px;
+    var g=mq.getContext('2d'); g.setTransform(px/S,0,0,px/S,0,0); paintMosque(g,true);
+    mqw=document.createElement('canvas'); mqw.width=mqw.height=px;
+  }
+
+  function drawSolidMosque(t){
+    var k=cl((t-T.solidIn)/T.solidDur), out=cl((t-T.morph-80)/420), a=eOut(k)*(1-out);
+    if(a<=0.001||!mq) return;
+    var px=mq.width, w=mqw.getContext('2d');
+    w.setTransform(1,0,0,1,0,0); w.globalCompositeOperation='source-over'; w.clearRect(0,0,px,px); w.drawImage(mq,0,0);
+    var sp=(t-T.sweep)/T.sweepDur;
+    if(sp>0&&sp<1){
+      var c=-0.3*px+sp*1.6*px, gr=w.createLinearGradient(c-px*0.18,c-px*0.18,c+px*0.18,c+px*0.18);
+      gr.addColorStop(0,'rgba(255,252,240,0)'); gr.addColorStop(.5,'rgba(255,252,240,.55)'); gr.addColorStop(1,'rgba(255,252,240,0)');
+      w.globalCompositeOperation='source-atop'; w.fillStyle=gr; w.fillRect(0,0,px,px);
+    }
+    var s=0.95+0.05*eOut(k)+0.03*out;
+    ctx.save(); ctx.globalAlpha=a; ctx.translate(W/2,H/2); ctx.scale(s,s);
+    ctx.drawImage(mqw,-L/2,-L/2,L,L); ctx.restore();
   }
 
   function build(){
@@ -390,6 +431,7 @@ document.documentElement.classList.add('js');
       };
     });
     glints=[]; burstDone=false;
+    makeMosque();
   }
 
   function eOut(t){return 1-Math.pow(1-t,3);}
@@ -441,7 +483,9 @@ document.documentElement.classList.add('js');
     drawGlow(t);
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
     var alpha = t<T.fadeParts?1:1-cl((t-T.fadeParts)/700);
-    var sw=(t-T.sweep)/T.sweepDur*1.5-0.25;   // posisi pita cahaya yang menyapu masjid
+    // partikel memudar saat masjid utuh muncul, lalu muncul lagi untuk membentuk logo
+    var pin=1-eOut(cl((t-T.solidIn)/T.solidDur)), pback=cl((t-T.morph)/260);
+    var pa = t<T.morph ? pin : pback;
     if(alpha>0){
       for(var i=0;i<parts.length;i++){
         var p=parts[i], x, y, c, r=rad;
@@ -454,8 +498,6 @@ document.documentElement.classList.add('js');
           c=p.mc;
           if(f>=1){
             x+=Math.sin(now*0.003+p.ph)*0.7; y+=Math.cos(now*0.0027+p.ph)*0.7;
-            var band=(p.mx+p.my)/2, dd=Math.abs(band-sw);
-            if(dd<0.09){ var w=1-dd/0.09; c=mix(c,GOLD,w*0.7); r=rad*(1+w*0.3); }
           }
         } else {
           var k=eIO(m), lx=ox+p.lx*L, ly=oy+p.ly*L, lift=Math.sin(Math.PI*k)*L*0.08*p.curl;
@@ -466,15 +508,17 @@ document.documentElement.classList.add('js');
         p.cx=x; p.cy=y;
         if(p.tw){
           var pulse=0.5+0.5*Math.sin(now*0.009+p.ph);
-          ctx.globalAlpha=alpha*0.22*pulse; ctx.fillStyle='rgb(236,224,196)';
+          ctx.globalAlpha=alpha*pa*0.22*pulse; ctx.fillStyle='rgb(236,224,196)';
           ctx.beginPath(); ctx.arc(x,y,rad*(2.4+1.4*pulse),0,6.2832); ctx.fill();
         }
-        ctx.globalAlpha=alpha;
+        if(alpha*pa<=0.002) continue;
+        ctx.globalAlpha=alpha*pa;
         ctx.fillStyle='rgb('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+')';
         ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.fill();
       }
       ctx.globalAlpha=1;
     }
+    drawSolidMosque(t);
     // kilau bintang kecil yang muncul acak
     var dt=now-last; last=now;
     if(false){
@@ -525,7 +569,7 @@ document.documentElement.classList.add('js');
   }
 
   document.getElementById('skipIntro').addEventListener('click',finish);
-  window.addEventListener('resize',function(){ if(!finished && !intro.hidden){ setSize(); } });
+  window.addEventListener('resize',function(){ if(!finished && !intro.hidden){ setSize(); makeMosque(); } });
   start();
 })();
 
